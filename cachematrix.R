@@ -1,7 +1,15 @@
-## Put comments here that give an overall description of what your
-## functions do
+## The two functions in this file  allow for the creation of a matrix object
+## that can cache its inverse after it is solved. Setting the data to new
+## values wipes out the cached data causing the inverse to be solved the next
+## time its requested
 
-## Write a short comment describing this function
+
+## The makeCacheMatrix function helps store the data and is really a list 
+## containing functions to:
+##    - set the value of the matrix
+##    - get the value of the matrix
+##    - set the value of the mean
+##    - get the value of the mean
 
 makeCacheMatrix <- function(x = matrix()) {        
   
@@ -17,14 +25,17 @@ makeCacheMatrix <- function(x = matrix()) {
 
   getInverted <- function() im
 
-    list(set = set, get = get,
-     setInverted = setInverted,
-     getInverted = getInverted)
+  list(set = set, get = get,
+    setInverted = setInverted,
+    getInverted = getInverted)
 
 }
 
 
-## Write a short comment describing this function
+## the cacheSolve function attempts to retrieve a solved inverse.
+## If found the inverse is retruned. If the inverse matrix does
+## not exist (retrieves NULL) it uses the traditional solve function 
+## create the inverse which is then stored and returned 
 
 cacheSolve <- function(x, ...) {
         
@@ -37,5 +48,5 @@ cacheSolve <- function(x, ...) {
   data <- x$get()
   im <- solve(data, ...)
   x$setInverted(im)
-  iim
+  im
 }
